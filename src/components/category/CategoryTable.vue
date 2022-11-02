@@ -46,13 +46,14 @@
     </v-row>
   </div>
 </template>
+
 <script>
 export default {
   name: "CategoryTable",
   data: () => ({
     search: "",
     dialog: false,
-    BASE_URL: process.env.VUE_APP_MANAGEMENT_SERVER+"/categories",
+    BASE_URL: `${process.env.VUE_APP_MANAGEMENT_SERVER}/categories`,
     headers: [
       { text: "Mã thể loại", align: "start", value: "category_id", width: "10%", },
       { text: "Tên thể loại", value: "category_name", width: "80%" },
@@ -194,5 +195,5 @@ export default {
       this.close();
     },
   },
-};
+}
 </script>

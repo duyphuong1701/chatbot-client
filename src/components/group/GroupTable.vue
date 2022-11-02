@@ -2,7 +2,13 @@
   <div>
     <v-row justify="center">
       <v-col md="10">
-        <v-text-field v-model="search" append-icon="mdi-magnify" label="Tìm kiếm" single-line hide-details>
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Tìm kiếm"
+          single-line
+          hide-details
+        >
         </v-text-field>
       </v-col>
       <v-dialog v-model="dialog" max-width="500px">
@@ -31,8 +37,14 @@
         <v-card>
           <v-card-title class="text-h5"> Chỉnh sửa </v-card-title>
           <div class="mx-5">
-            <v-text-field label="ID chủ đề" v-model="editedItem.categoryId"></v-text-field>
-            <v-text-field label="ID chủ đề" v-model="editedItem.categoryName"></v-text-field>
+            <v-text-field
+              label="ID chủ đề"
+              v-model="editedItem.categoryId"
+            ></v-text-field>
+            <v-text-field
+              label="ID chủ đề"
+              v-model="editedItem.categoryName"
+            ></v-text-field>
           </div>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -52,9 +64,9 @@ export default {
   data: () => ({
     search: "",
     dialog: false,
-    BASE_URL: "http://localhost:8088/groups",
+    BASE_URL: `${process.env.VUE_APP_MANAGEMENT_SERVER}/groups`,
     headers: [
-      { text: "Mã nhóm", align: "start", value: "group_id", width: "10%", },
+      { text: "Mã nhóm", align: "start", value: "group_id", width: "10%" },
       { text: "Tên nhóm", value: "group_name", width: "80%" },
       { text: "Thao tác", value: "actions", sortable: false, width: "10%" },
     ],
@@ -95,11 +107,9 @@ export default {
     },
     getCategory() {
       try {
-        this.$axios
-          .get(`${this.BASE_URL}`)
-          .then((res) => {
-            this.desserts = res.data;
-          });
+        this.$axios.get(this.BASE_URL).then((res) => {
+          this.desserts = res.data;
+        });
       } catch (e) {
         console.log(e);
       }

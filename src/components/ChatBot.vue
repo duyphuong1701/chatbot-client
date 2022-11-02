@@ -26,6 +26,7 @@ export default {
   name: "ChatBox",
   components: { BotContent, UserContent },
   data: () => ({
+    BASE_URL: process.env.VUE_APP_ML_SERVER,
     message: "",
     messages: [],
   }),
@@ -58,7 +59,7 @@ export default {
       });
       this.message = "";
       this.$axios
-        .get(`http://localhost:8765/query2?question=${message}`)
+        .get(this.BASE_URL+"/query2?question="+message)
         .then((res) => {
           console.log(res);
 

@@ -2,7 +2,13 @@
   <div>
     <v-row justify="center">
       <v-col md="10">
-        <v-text-field v-model="search" append-icon="mdi-magnify" label="Tìm kiếm" single-line hide-details>
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Tìm kiếm"
+          single-line
+          hide-details
+        >
         </v-text-field>
       </v-col>
       <v-dialog v-model="dialog" max-width="500px">
@@ -20,8 +26,15 @@
         </v-card>
       </v-dialog>
     </v-row>
-    <v-data-table :search="search" :headers="headers" :items="desserts" item-key="questionId"
-      :header-props="{ sortIcon: null }" :items-per-page="15" style="height:100; width:100;">
+    <v-data-table
+      :search="search"
+      :headers="headers"
+      :items="desserts"
+      item-key="questionId"
+      :header-props="{ sortIcon: null }"
+      :items-per-page="15"
+      style="height: 100; width: 100"
+    >
       <template v-slot:[`item.actions`]="{ item }">
         <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
         <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
@@ -32,9 +45,18 @@
         <v-card>
           <v-card-title class="text-h5"> Chỉnh sửa </v-card-title>
           <div class="mx-5">
-            <v-text-field label="ID lớp" v-model="editedItem.questionId"></v-text-field>
-            <v-text-field label="ID nhóm" v-model="editedItem.categoryId"></v-text-field>
-            <v-text-field label="Câu hỏi" v-model="editedItem.questionContent"></v-text-field>
+            <v-text-field
+              label="ID lớp"
+              v-model="editedItem.questionId"
+            ></v-text-field>
+            <v-text-field
+              label="ID nhóm"
+              v-model="editedItem.categoryId"
+            ></v-text-field>
+            <v-text-field
+              label="Câu hỏi"
+              v-model="editedItem.questionContent"
+            ></v-text-field>
           </div>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -52,12 +74,12 @@ export default {
     return {
       search: "",
       dialog: false,
-      BASE_URL: "http://localhost:8088" + "/questions",
+      url_axios: `${process.env.VUE_APP_MANAGEMENT_SERVER}/questions`,
       headers: [
-        { text: "ID câu hỏi", value: "question_id", width: "20%" },
+        { text: "ID câu hỏi", value: "question_id", width: "26%" },
         { text: "ID chủ đề", value: "category_id", width: "6%" },
         { text: "ID Nhóm", value: "group_id", width: "6%" },
-        { text: "Câu hỏi", value: "question_content", width: "58%" },
+        { text: "Câu hỏi", value: "question_content", width: "50%" },
         { text: "Thao tác", value: "actions", sort: false, width: "10%" },
       ],
       categorys: [],
@@ -81,8 +103,11 @@ export default {
     formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
     },
+    env() {
+      return process.env;
+    },
   },
-  mounted() { },
+  mounted() {},
 
   watch: {
     dialog(val) {
@@ -99,12 +124,12 @@ export default {
   methods: {
     async syncData() {
       const question = await this.getQuestion();
-      this.desserts = question
+      this.desserts = question;
     },
     async getQuestion() {
       let data;
       try {
-        await this.$axios.get(`${this.BASE_URL}`).then((res) => {
+        await this.$axios.get(this.url_axios).then((res) => {
           data = res.data;
         });
       } catch (e) {
@@ -114,7 +139,7 @@ export default {
     },
     deleteQuestion(item) {
       try {
-        this.$axios.delete(`${this.BASE_URL}/${item.questionId}`);
+        this.$axios.delete(`${this.url_axios}/${item.questionId}`);
       } catch (e) {
         console.log(e);
       }
@@ -123,7 +148,7 @@ export default {
       try {
         console.log(item);
         this.$axios.put(
-          `${this.BASE_URL}/${item.questionId}`,
+          `${this.url_axios}/${item.questionId}`,
           {
             questionId: item.questionId,
             categoryId: item.categoryId,
@@ -142,7 +167,7 @@ export default {
     postQuestion(item) {
       try {
         this.$axios.post(
-          `${this.BASE_URL}`,
+          `${this.url_axios}`,
           {
             questionId: item.questionId,
             categoryId: item.categoryId,

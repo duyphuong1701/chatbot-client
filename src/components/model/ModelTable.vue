@@ -69,7 +69,7 @@ export default {
   data: () => ({
     search: "",
     dialog: false,
-    BASE_URL: "http://localhost:8088/model",
+    BASE_URL: `${process.env.VUE_APP_MANAGEMENT_SERVER}/model`,
     headers: [
       { text: "ID", align: "start", value: "model_id", width: "30%" },
       { text: "Tên mô hình", value: "name", width: "20%" },

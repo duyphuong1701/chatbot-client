@@ -2,8 +2,14 @@ version: "3.7"
 
 services:
   app:
+    container_name: chatbot-client
     build: .
     image: chatbot/client:v1
     ports:
       - "8080:8080"
     restart: unless-stopped
+    networks:
+      - chatbot_network
+networks:
+  chatbot_network:
+    external: true

@@ -75,11 +75,11 @@ export default {
   data: () => ({
     search: "",
     dialog: false,
-    BASE_URL: "http://localhost:8088/answers",
+    BASE_URL: `${process.env.VUE_APP_MANAGEMENT_SERVER}/answers`,
     headers: [
-      { text: "ID trả lời", value: "answer_id", width: "19%" },
-      { text: "ID chủ đề", value: "category_id", width: "6%" },
-      { text: "Câu trả lời", value: "answer_content", width: "65%" },
+      { text: "ID trả lời", value: "answer_id", width: "25%" },
+      { text: "ID chủ đề", value: "category_id", width: "5%" },
+      { text: "Câu trả lời", value: "answer_content", width: "60%" },
       { text: "Thao tác", value: "actions", width: "10%" },
     ],
     desserts: [],
@@ -172,7 +172,7 @@ export default {
 
     editItem(item) {
       this.editedIndex = this.desserts.indexOf(item);
-      console.log(item)
+      console.log(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
